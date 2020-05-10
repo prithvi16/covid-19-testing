@@ -14,11 +14,13 @@ class App extends React.Component {
       userLatitude: 1,
       nearestLocations: [],
       mapActive: false,
+      mapLoading: false,
     };
   }
   handleClick(e) {
     e.preventDefault();
     if (navigator.geolocation) {
+      this.setState({mapLoading:true});
       navigator.geolocation.getCurrentPosition(this.displayLocationInfo);
     } else {
       console.log("We don't have geolocation");
@@ -36,6 +38,7 @@ class App extends React.Component {
       userLongitude: lng,
       nearestLocations: orderedByDistance,
       mapActive: true,
+      mapLoading: false,
     });
   }
   render() {
@@ -92,24 +95,26 @@ class App extends React.Component {
             >
               Show nearest testing centers
             </button>
-            <div className={this.state.mapActive ? "block" : "hidden"}>
-              <Map
-                center={[this.state.userLatitude, this.state.userLongitude]}
-                zoom={12}
-              >
-                <TileLayer
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                />
-                {this.state.nearestLocations.map((location) => (
-                  <Marker position={[location.latitude, location.longitude]} />
-                ))}
-              </Map>
+            { 
+            this.state.mapLoading? "Loading..." : <div className={this.state.mapActive ? "block" : "hidden"}>
+            <Map
+              center={[this.state.userLatitude, this.state.userLongitude]}
+              zoom={12}
+            >
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              />
+              {this.state.nearestLocations.map((location) => (
+                <Marker position={[location.latitude, location.longitude]} />
+              ))}
+            </Map>
 
-              <div class="bg-white shadow overflow-hidden sm:rounded-md my-8">
-                <ul>{listItems}</ul>
-              </div>
+            <div class="bg-white shadow overflow-hidden sm:rounded-md my-8">
+              <ul>{listItems}</ul>
             </div>
+          </div>
+            }
           </div>
         </div>
       </div>
