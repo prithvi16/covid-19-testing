@@ -1,5 +1,7 @@
 import React from "react";
 import "./App.css";
+import { Map, Marker, Popup, TileLayer } from "react-leaflet";
+import { Icon } from "leaflet";
 
 class App extends React.Component {
   constructor() {
@@ -33,6 +35,15 @@ class App extends React.Component {
           Your location is {this.state.userLongitude} and{" "}
           {this.state.userLatitude}
         </h2>
+        <Map
+          center={[this.state.userLatitude, this.state.userLongitude]}
+          zoom={12}
+        >
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          />
+        </Map>
       </div>
     );
   }
