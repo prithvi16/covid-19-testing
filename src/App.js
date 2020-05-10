@@ -20,7 +20,7 @@ class App extends React.Component {
   handleClick(e) {
     e.preventDefault();
     if (navigator.geolocation) {
-      this.setState({mapLoading:true});
+      this.setState({ mapLoading: true });
       navigator.geolocation.getCurrentPosition(this.displayLocationInfo);
     } else {
       console.log("We don't have geolocation");
@@ -95,26 +95,34 @@ class App extends React.Component {
             >
               Show nearest testing centers
             </button>
-            { 
-            this.state.mapLoading? (<div class="text-center my-8 text-purple-700 font-medium">Loading...</div>) : (<div className={this.state.mapActive ? "block" : "hidden"}>
-            
-            <div class="bg-white shadow overflow-hidden sm:rounded-md my-8">
-              <ul>{listItems}</ul>
-            </div>
-            <Map
-              center={[this.state.userLatitude, this.state.userLongitude]}
-              zoom={12}
-            >
-              <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              />
-              {this.state.nearestLocations.map((location) => (
-                <Marker position={[location.latitude, location.longitude]} />
-              ))}
-            </Map>
-          </div>)
-            }
+            {this.state.mapLoading ? (
+              <div class="text-center my-8 text-purple-700 font-medium">
+                Loading...
+              </div>
+            ) : (
+              <div className={this.state.mapActive ? "block" : "hidden"}>
+                <div class="bg-white shadow overflow-hidden sm:rounded-md my-8">
+                  <ul>{listItems}</ul>
+                </div>
+                <div class="shadow overflow-hidden sm:rounded-md my-8 h-64">
+                  {" "}
+                  <Map
+                    center={[this.state.userLatitude, this.state.userLongitude]}
+                    zoom={12}
+                  >
+                    <TileLayer
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    />
+                    {this.state.nearestLocations.map((location) => (
+                      <Marker
+                        position={[location.latitude, location.longitude]}
+                      />
+                    ))}
+                  </Map>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
