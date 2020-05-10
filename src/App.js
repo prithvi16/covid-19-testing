@@ -96,7 +96,7 @@ class App extends React.Component {
               Show nearest testing centers
             </button>
             { 
-            this.state.mapLoading? "Loading..." : <div className={this.state.mapActive ? "block" : "hidden"}>
+            this.state.mapLoading? (<div class="text-center my-8 text-purple-700 font-medium">Loading...</div>) : (<div className={this.state.mapActive ? "block" : "hidden"}>
             
             <div class="bg-white shadow overflow-hidden sm:rounded-md my-8">
               <ul>{listItems}</ul>
@@ -113,7 +113,7 @@ class App extends React.Component {
                 <Marker position={[location.latitude, location.longitude]} />
               ))}
             </Map>
-          </div>
+          </div>)
             }
           </div>
         </div>
