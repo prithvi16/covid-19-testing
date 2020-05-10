@@ -37,13 +37,11 @@ class App extends React.Component {
       <li>{location["Center name"]}</li>
     ));
     return (
-      <div className="App">
-        <h1>COVID 19 testing locations</h1>
-        <button onClick={this.handleClick}>Show nearest testing centers</button>
-        <h2>
-          Your location is {this.state.userLongitude} and{" "}
-          {this.state.userLatitude}
-        </h2>
+      <div className="text-center">
+        <h1 class="text-xl font-semibold my-8">COVID 19 testing locations</h1>
+        <button onClick={this.handleClick} type="button" class="my-4 inline-flex items-center px-5 py-2 border border-transparent text-xs leading-4 font-medium rounded text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
+        Show nearest testing centers
+        </button>
         <Map
           center={[this.state.userLatitude, this.state.userLongitude]}
           zoom={12}
@@ -60,6 +58,7 @@ class App extends React.Component {
       ))}
         </Map>
         <ol>{listItems}</ol>
+        
       </div>
     );
   }
