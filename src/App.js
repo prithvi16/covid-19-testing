@@ -9,7 +9,12 @@ class App extends React.Component {
     super();
     this.handleClick = this.handleClick.bind(this);
     this.displayLocationInfo = this.displayLocationInfo.bind(this);
-    this.state = { userLongitude: 1, userLatitude: 1, nearestLocations: [] };
+    this.state = {
+      userLongitude: 1,
+      userLatitude: 1,
+      nearestLocations: [],
+      mapActive: false,
+    };
   }
   handleClick(e) {
     e.preventDefault();
@@ -30,6 +35,7 @@ class App extends React.Component {
       userLatitude: lat,
       userLongitude: lng,
       nearestLocations: orderedByDistance,
+      mapActive: true,
     });
   }
   render() {
@@ -86,21 +92,23 @@ class App extends React.Component {
             >
               Show nearest testing centers
             </button>
-            <Map
-              center={[this.state.userLatitude, this.state.userLongitude]}
-              zoom={12}
-            >
-              <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              />
-              {this.state.nearestLocations.map((location) => (
-                <Marker position={[location.latitude, location.longitude]} />
-              ))}
-            </Map>
+            <div className={this.state.mapActive ? "block" : "hidden"}>
+              <Map
+                center={[this.state.userLatitude, this.state.userLongitude]}
+                zoom={12}
+              >
+                <TileLayer
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                />
+                {this.state.nearestLocations.map((location) => (
+                  <Marker position={[location.latitude, location.longitude]} />
+                ))}
+              </Map>
 
-            <div class="bg-white shadow overflow-hidden sm:rounded-md my-8">
-              <ul>{listItems}</ul>
+              <div class="bg-white shadow overflow-hidden sm:rounded-md my-8">
+                <ul>{listItems}</ul>
+              </div>
             </div>
           </div>
         </div>
