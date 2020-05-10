@@ -97,6 +97,10 @@ class App extends React.Component {
             </button>
             { 
             this.state.mapLoading? "Loading..." : <div className={this.state.mapActive ? "block" : "hidden"}>
+            
+            <div class="bg-white shadow overflow-hidden sm:rounded-md my-8">
+              <ul>{listItems}</ul>
+            </div>
             <Map
               center={[this.state.userLatitude, this.state.userLongitude]}
               zoom={12}
@@ -109,10 +113,6 @@ class App extends React.Component {
                 <Marker position={[location.latitude, location.longitude]} />
               ))}
             </Map>
-
-            <div class="bg-white shadow overflow-hidden sm:rounded-md my-8">
-              <ul>{listItems}</ul>
-            </div>
           </div>
             }
           </div>
