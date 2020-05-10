@@ -1,15 +1,15 @@
 import React from "react";
 import "./App.css";
-import { Map, Marker, Popup, TileLayer } from "react-leaflet";
-import { Icon } from "leaflet";
+import { Map, TileLayer } from "react-leaflet";
+import * as geolib from "geolib";
+import testCenters from "./data/testing-centers";
 
 class App extends React.Component {
   constructor() {
     super();
-    console.log("coming to constructor");
     this.handleClick = this.handleClick.bind(this);
     this.displayLocationInfo = this.displayLocationInfo.bind(this);
-    this.state = { userLongitude: 1, userLatitude: 1 };
+    this.state = { userLongitude: 1, userLatitude: 1, nearestLocations: [] };
   }
   handleClick(e) {
     e.preventDefault();
@@ -24,13 +24,22 @@ class App extends React.Component {
     const lng = position.coords.longitude;
     const lat = position.coords.latitude;
     this.setState({ userLatitude: lat, userLongitude: lng });
-    console.log(this.state);
+    let userLocation = { longitude: lng, latitude: lat };
+    let orderedByDistance = geolib.orderByDistance(userLocation, testCenters);
+    this.setState({
+      userLatitude: lat,
+      userLongitude: lng,
+      nearestLocations: orderedByDistance,
+    });
   }
   render() {
+    const listItems = this.state.nearestLocations.map((location) => (
+      <li>{location["Center name"]}</li>
+    ));
     return (
       <div className="App">
         <h1>COVID 19 testing locations</h1>
-        <button onClick={this.handleClick}>Show my location</button>
+        <button onClick={this.handleClick}>Show nearest testing centers</button>
         <h2>
           Your location is {this.state.userLongitude} and{" "}
           {this.state.userLatitude}
@@ -44,6 +53,7 @@ class App extends React.Component {
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
         </Map>
+        <ol>{listItems}</ol>
       </div>
     );
   }
