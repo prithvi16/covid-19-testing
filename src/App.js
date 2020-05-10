@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Map, TileLayer } from "react-leaflet";
+import { Map, Marker, TileLayer } from "react-leaflet";
 import * as geolib from "geolib";
 import testCenters from "./data/testing-centers";
 
@@ -52,6 +52,12 @@ class App extends React.Component {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
+        {this.state.nearestLocations.map(location => (
+        <Marker
+          
+          position={[location.latitude, location.longitude]}
+        />
+      ))}
         </Map>
         <ol>{listItems}</ol>
       </div>
