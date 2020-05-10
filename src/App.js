@@ -30,7 +30,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <h1>COVID 19 testing locations</h1>
-        <button onClick={this.handleClick}>hello</button>
+        <button onClick={this.handleClick}>Show my location</button>
         <h2>
           Your location is {this.state.userLongitude} and{" "}
           {this.state.userLatitude}
